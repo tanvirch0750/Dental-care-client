@@ -8,7 +8,7 @@ const Hero = () => {
         <img
           src={chair}
           alt="dental care"
-          className="max-w-md rounded-lg shadow-2xl lg:w-2/5 lg:h-[355px]"
+          className="rounded-lg shadow-2xl lg:w-2/5 lg:h-[355px]"
         />
         <div className="lg:w-3/5">
           <h1 className="text-3xl lg:text-5xl font-bold">
