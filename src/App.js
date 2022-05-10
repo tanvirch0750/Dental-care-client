@@ -1,11 +1,11 @@
 import "./App.css";
+import Header from "./Shared/Header/Header";
 
 function App() {
   return (
-    <div className="App">
-      <h1 className="text-6xl">Hello dental care</h1>
-      <button className="btn btn-primary">Button</button>
-    </div>
+    <>
+      <Header />
+    </>
   );
 }
 
