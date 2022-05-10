@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -6,7 +7,7 @@ const Header = () => {
       <div className="navbar justify-between py-4 lg:container lg:mx-auto">
         <div className="navbar-start">
           <div className="dropdown">
-            <label tabindex="0" className="btn btn-ghost lg:hidden">
+            <label tabIndex="0" className="btn btn-ghost lg:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
@@ -15,58 +16,90 @@ const Header = () => {
                 stroke="currentColor"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="M4 6h16M4 12h8m-8 6h16"
                 />
               </svg>
             </label>
             <ul
-              tabindex="0"
+              tabIndex="0"
               className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>
-                <a>Home</a>
+                <Link to="/">Home</Link>
               </li>
               <li>
-                <a>About</a>
+                <Link to="/about">About</Link>
               </li>
               <li>
-                <a>Appointment</a>
+                <Link to="/appointment">Appointment</Link>
               </li>
               <li>
-                <a>Reviews</a>
+                <Link to="/reviews">Reviews</Link>
               </li>
               <li>
-                <a>Contact Us</a>
+                <Link to="/contact-us">Contact Us</Link>
               </li>
               <li>
-                <a>Login</a>
+                <Link to="/login">Login</Link>
               </li>
             </ul>
           </div>
-          <a className="btn btn-ghost normal-case text-2xl">Dental Care</a>
+          <Link to="/" className="text-2xl">
+            Dental Care
+          </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal p-0">
-            <li className="hover:bg-accent hover:text-white hover:rounded-lg">
-              <a>Home</a>
+            <li className="">
+              <Link
+                to="/"
+                className="hover:bg-accent hover:text-white hover:rounded-lg active:bg-accent focus:bg-accent focus:text-white"
+              >
+                Home
+              </Link>
             </li>
-            <li className="hover:bg-accent hover:text-white hover:rounded-lg">
-              <a>About</a>
+            <li className="">
+              <Link
+                to="/about"
+                className="hover:bg-accent hover:text-white hover:rounded-lg active:bg-accent focus:bg-accent focus:text-white"
+              >
+                About
+              </Link>
             </li>
-            <li className="hover:bg-accent hover:text-white hover:rounded-lg">
-              <a>Appointment</a>
+            <li className="">
+              <Link
+                to="/appointment"
+                className="hover:bg-accent hover:text-white hover:rounded-lg active:bg-accent focus:bg-accent focus:text-white"
+              >
+                Appointment
+              </Link>
             </li>
-            <li className="hover:bg-accent hover:text-white hover:rounded-lg">
-              <a>Reviews</a>
+            <li className="">
+              <Link
+                to="/reviews"
+                className="hover:bg-accent hover:text-white hover:rounded-lg active:bg-accent focus:bg-accent focus:text-white"
+              >
+                Reviews
+              </Link>
             </li>
-            <li className="hover:bg-accent hover:text-white hover:rounded-lg">
-              <a>Contact Us</a>
+            <li className="">
+              <Link
+                to="/contact-us"
+                className="hover:bg-accent hover:text-white hover:rounded-lg active:bg-accent focus:bg-accent focus:text-white"
+              >
+                Contact Us
+              </Link>
             </li>
-            <li className="hover:bg-accent hover:text-white hover:rounded-lg">
-              <a>Login</a>
+            <li className="">
+              <Link
+                to="/login"
+                className="hover:bg-accent hover:text-white hover:rounded-lg active:bg-accent focus:bg-accent focus:text-white"
+              >
+                Login
+              </Link>
             </li>
           </ul>
         </div>
