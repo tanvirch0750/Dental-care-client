@@ -7,7 +7,7 @@ const AppointmentHome = () => {
   return (
     <section
       style={{ backgroundImage: `url(${background})` }}
-      className="mt-12 mb-12 lg:mt-[300px] lg:mb-[170px] py-0"
+      className="mt-12 mb-12 lg:mt-[300px] lg:mb-[170px] py-8 lg:py-0"
     >
       <div className="hero">
         <div className="hero-content flex-col lg:flex-row  py-0">
