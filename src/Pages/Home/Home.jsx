@@ -1,5 +1,6 @@
 import React from "react";
-import Feature from "../../Components/Feature/Feature";
+import AppointmentHome from "../../Components/AppointmentHome/AppointmentHome";
+import FeatureHome from "../../Components/FeatureHome/FeatureHome";
 import Hero from "../../Components/Hero/Hero";
 import Info from "../../Components/Info/Info";
 import Services from "../../Components/Service/Services";
@@ -10,7 +11,8 @@ const Home = () => {
       <Hero />
       <Info />
       <Services />
-      <Feature />
+      <FeatureHome />
+      <AppointmentHome />
     </>
   );
 };

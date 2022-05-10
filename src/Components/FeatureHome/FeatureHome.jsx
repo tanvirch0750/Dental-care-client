@@ -2,7 +2,7 @@ import React from "react";
 import treatment from "../../assets/images/treatment.png";
 import Button from "../Button/Button";
 
-const Feature = () => {
+const FeatureHome = () => {
   return (
     <section className="hero min-h-screen pt-10">
       <div className="hero-content flex-col lg:flex-row gap-14">
@@ -11,8 +11,8 @@ const Feature = () => {
           alt="treatment"
           className="rounded-lg shadow-2xl h-[576px]"
         />
-        <div className="lg:w-2/4">
-          <h2 className="text-5xl font-bold text-accent text-[48px]">
+        <div className="lg:w-2/5">
+          <h2 className="text-5xl font-bold text-accent">
             Exceptional Dental Care, on Your Terms
           </h2>
           <p className="py-6">
@@ -30,4 +30,4 @@ const Feature = () => {
   );
 };
 
-export default Feature;
+export default FeatureHome;
