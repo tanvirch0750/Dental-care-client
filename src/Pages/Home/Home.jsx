@@ -1,5 +1,6 @@
 import React from "react";
 import AppointmentHome from "../../Components/AppointmentHome/AppointmentHome";
+import ContactFormHome from "../../Components/ContactForm/ContactFormHome";
 import FeatureHome from "../../Components/FeatureHome/FeatureHome";
 import Hero from "../../Components/Hero/Hero";
 import Info from "../../Components/Info/Info";
@@ -15,6 +16,7 @@ const Home = () => {
       <FeatureHome />
       <AppointmentHome />
       <TestimonialHome />
+      <ContactFormHome />
     </>
   );
 };
