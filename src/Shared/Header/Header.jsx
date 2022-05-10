@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
-    <header>
+    <header className="bg-base-100">
       <div className="navbar justify-between py-4 lg:container lg:mx-auto">
         <div className="navbar-start">
           <div className="dropdown">
