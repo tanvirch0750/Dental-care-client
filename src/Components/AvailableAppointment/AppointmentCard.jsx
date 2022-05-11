@@ -18,8 +18,8 @@ const AppointmentCard = ({ item, setTreatment }) => {
         </p>
         <div className="card-actions justify-end mt-3">
           <label
-            for="appointment-modal"
-            class="btn modal-button btn-primary bg-gradient-to-r from-secondary to-primary text-white font-bold uppercase"
+            htmlFor="appointment-modal"
+            className="btn modal-button btn-primary bg-gradient-to-r from-secondary to-primary text-white font-bold uppercase"
             disabled={slots.length === 0}
             onClick={() => setTreatment(item)}
           >
