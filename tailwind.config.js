@@ -4,7 +4,7 @@ module.exports = {
     extend: {
       backgroundImage: {
         "hero-pattern":
-          "linear-gradient(to top, rgba(255, 255, 255, 0.92) 85%, rgba(255, 255, 255)), url('https://i.ibb.co/FYkMK8P/chair.png')",
+          "linear-gradient(to top, rgba(255, 255, 255, .99) 0.1%, rgba(255, 255, 255, 0.90) 90%, rgba(255, 255, 255)), url('https://i.ibb.co/FYkMK8P/chair.png')",
       },
     },
   },

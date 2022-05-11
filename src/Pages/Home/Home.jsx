@@ -6,6 +6,7 @@ import HeroHome from "../../Components/Hero/HeroHome";
 import Info from "../../Components/Info/Info";
 import Services from "../../Components/Service/Services";
 import TestimonialHome from "../../Components/Testimonial/TestimonialHome.";
+import Footer from "../../Shared/Footer/Footer";
 
 const Home = () => {
   return (
@@ -17,6 +18,7 @@ const Home = () => {
       <AppointmentHome />
       <TestimonialHome />
       <ContactFormHome />
+      <Footer />
     </>
   );
 };

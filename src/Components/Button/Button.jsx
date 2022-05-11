@@ -1,8 +1,11 @@
 import React from "react";
 
-const Button = ({ children }) => {
+const Button = ({ children, disabled }) => {
   return (
-    <button className="btn btn-primary bg-gradient-to-r from-secondary to-primary text-white font-bold uppercase">
+    <button
+      disabled={disabled}
+      className="btn btn-primary bg-gradient-to-r from-secondary to-primary text-white font-bold uppercase"
+    >
       {children}
     </button>
   );

@@ -6,7 +6,6 @@ import Login from "./Pages/Authentication/Login/Login";
 import ContactUs from "./Pages/ContactUs/ContactUs";
 import Home from "./Pages/Home/Home";
 import Reviews from "./Pages/Reviews/Reviews";
-import Footer from "./Shared/Footer/Footer";
 import Header from "./Shared/Header/Header";
 
 function App() {
@@ -21,7 +20,6 @@ function App() {
         <Route path="/contact-us" element={<ContactUs />}></Route>
         <Route path="/login" element={<Login />}></Route>
       </Routes>
-      <Footer />
     </>
   );
 }
