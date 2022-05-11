@@ -31,7 +31,7 @@ const testimonialDb = [
 
 const TestimonialHome = () => {
   return (
-    <section className="pb-24 px-5">
+    <section className="pb-24 px-5 lg:container lg:mx-auto">
       <div className="flex justify-between">
         <div>
           <span className="uppercase font-bold text-secondary text-[20px]">

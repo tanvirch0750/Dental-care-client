@@ -1,7 +1,7 @@
 import React from "react";
 import chair from "../../assets/images/chair.png";
 
-const Hero = () => {
+const HeroHome = () => {
   return (
     <section className="hero min-h-screen lg:bg-hero-pattern lg:bg-center lg:bg-cover">
       <div className="hero-content flex-col lg:flex-row-reverse gap-8">
@@ -29,4 +29,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default HeroHome;

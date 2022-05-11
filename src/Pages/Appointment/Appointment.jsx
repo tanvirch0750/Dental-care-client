@@ -1,10 +1,11 @@
 import React from "react";
+import HeroAppointment from "../../Components/Hero/HeroAppointment";
 
 const Appointment = () => {
   return (
-    <div>
-      <h1>Appointment</h1>
-    </div>
+    <>
+      <HeroAppointment />
+    </>
   );
 };
 
