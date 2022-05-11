@@ -1,7 +1,6 @@
 import React from "react";
-import Button from "../../Components/Button/Button";
 
-const AppointmentCard = ({ item }) => {
+const AppointmentCard = ({ item, setTreatment }) => {
   const { name, slots } = item;
   return (
     <div className="card bg-white shadow-lg">
@@ -18,7 +17,14 @@ const AppointmentCard = ({ item }) => {
           {slots.length} {slots.length > 1 ? "slots" : "slot"} availbale
         </p>
         <div className="card-actions justify-end mt-3">
-          <Button disabled={slots.length === 0}>Book Appointment</Button>
+          <label
+            for="appointment-modal"
+            class="btn modal-button btn-primary bg-gradient-to-r from-secondary to-primary text-white font-bold uppercase"
+            disabled={slots.length === 0}
+            onClick={() => setTreatment(item)}
+          >
+            Book Treatment
+          </label>
         </div>
       </div>
     </div>
