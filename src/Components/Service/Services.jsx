@@ -27,7 +27,7 @@ const serviceDb = [
 
 const Services = () => {
   return (
-    <section className="py-24 px-5">
+    <section className="py-24 lg:container lg:mx-auto px-5 lg:px-0">
       <div className="text-center">
         <span className="uppercase font-bold text-secondary text-[20px]">
           Our Services
