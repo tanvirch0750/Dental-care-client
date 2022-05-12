@@ -13,7 +13,7 @@ const HeroHome = () => {
           />
         </div>
         <div className="lg:w-2/4">
-          <h1 className="text-3xl lg:text-5xl font-bold">
+          <h1 className="text-3xl lg:text-5xl text-accent font-bold">
             Your <span className="text-primary">New Smile</span> Starts{" "}
             <br></br> Here
           </h1>
