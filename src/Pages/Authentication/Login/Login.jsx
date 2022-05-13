@@ -1,11 +1,17 @@
 import React from "react";
-import { useSignInWithGoogle } from "react-firebase-hooks/auth";
+import {
+  useSignInWithEmailAndPassword,
+  useSignInWithGoogle,
+} from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
+import Loader from "../../../Components/Loader/Loader";
 import auth from "../../../Firebase/firebase.init";
 
 const Login = () => {
-  const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
+  const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
+  const [signInWithEmailAndPassword, user, loading, error] =
+    useSignInWithEmailAndPassword(auth);
   const {
     register,
     formState: { errors },
@@ -13,18 +19,25 @@ const Login = () => {
   } = useForm({});
   const navigate = useNavigate();
 
+  let errorMessage;
+
   const handleGoogleSubmit = () => {
     signInWithGoogle();
   };
 
   const onSubmit = (data) => {
     console.log(data);
+    signInWithEmailAndPassword(data.email, data.password);
   };
 
-  console.log(user);
+  if (loading || gLoading) {
+    return <Loader />;
+  }
 
-  if (user) {
-    navigate("/");
+  if (error || gError) {
+    errorMessage = (
+      <span className="text-red-500">{error?.message || gError?.message}</span>
+    );
   }
 
   return (
@@ -91,7 +104,7 @@ const Login = () => {
                 </span>
               )}
             </div>
-
+            {errorMessage}
             <button
               type="submit"
               className="btn btn-accent input input-bordered w-full uppercase mt-4"
