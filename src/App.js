@@ -3,6 +3,7 @@ import "./App.css";
 import About from "./Pages/About/About";
 import Appointment from "./Pages/Appointment/Appointment";
 import Login from "./Pages/Authentication/Login/Login";
+import Signup from "./Pages/Authentication/Signup/Signup";
 import ContactUs from "./Pages/ContactUs/ContactUs";
 import Home from "./Pages/Home/Home";
 import Reviews from "./Pages/Reviews/Reviews";
@@ -19,6 +20,7 @@ function App() {
         <Route path="/reviews" element={<Reviews />}></Route>
         <Route path="/contact-us" element={<ContactUs />}></Route>
         <Route path="/login" element={<Login />}></Route>
+        <Route path="/signup" element={<Signup />}></Route>
       </Routes>
     </>
   );

@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  useSignInWithEmailAndPassword,
+  useCreateUserWithEmailAndPassword,
   useSignInWithGoogle,
 } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
@@ -8,10 +8,10 @@ import { Link, useNavigate } from "react-router-dom";
 import Loader from "../../../Components/Loader/Loader";
 import auth from "../../../Firebase/firebase.init";
 
-const Login = () => {
+const Signup = () => {
   const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
-  const [signInWithEmailAndPassword, user, loading, error] =
-    useSignInWithEmailAndPassword(auth);
+  const [createUserWithEmailAndPassword, user, loading, error] =
+    useCreateUserWithEmailAndPassword(auth);
   const {
     register,
     formState: { errors },
@@ -27,7 +27,7 @@ const Login = () => {
 
   const onSubmit = (data) => {
     console.log(data);
-    signInWithEmailAndPassword(data.email, data.password);
+    createUserWithEmailAndPassword(data.email, data.password);
   };
 
   if (loading || gLoading) {
@@ -41,14 +41,33 @@ const Login = () => {
   }
 
   return (
-    <section className="min-h-[calc(100vh-80px)] flex justify-center items-center">
+    <section className="min-h-[calc(100vh-80px)] flex justify-center items-center py-16">
       <div className="card w-96 bg-base-100 shadow-lg">
         <div className="card-body">
           <h2 className="text-center text-2xl text-accent capitalize font-bold">
-            Login
+            Signup
           </h2>
           <form className="mt-6" onSubmit={handleSubmit(onSubmit)}>
             <div>
+              <label className="font-medium">Name:</label>
+              <input
+                {...register("name", {
+                  required: {
+                    value: true,
+                    message: "Name is required",
+                  },
+                })}
+                type="text"
+                placeholder="Your Email"
+                className="input input-bordered w-full mt-1"
+              />
+              {errors.name?.type === "required" && (
+                <span className="text-red-500 mt-2 block">
+                  {errors?.name?.message}
+                </span>
+              )}
+            </div>
+            <div className="mt-4">
               <label className="font-medium">Email:</label>
               <input
                 {...register("email", {
@@ -109,13 +128,13 @@ const Login = () => {
               type="submit"
               className="btn btn-accent input input-bordered w-full uppercase mt-4"
             >
-              Login
+              Signup
             </button>
           </form>
           <p className="text-accent text-sm text-center font-medium">
-            New to Dental Care?{" "}
-            <Link to="/signup" className="text-secondary font-medium">
-              Crete a new account
+            Already have an account?{" "}
+            <Link to="/login" className="text-secondary font-medium">
+              Login
             </Link>
           </p>
           <div className="divider">OR</div>
@@ -131,4 +150,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;
