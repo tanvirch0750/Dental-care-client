@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   useCreateUserWithEmailAndPassword,
   useSignInWithGoogle,
+  useUpdateProfile,
 } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Loader from "../../../Components/Loader/Loader";
 import auth from "../../../Firebase/firebase.init";
 
@@ -12,6 +13,7 @@ const Signup = () => {
   const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
   const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
+  const [updateProfile, updating, updateError] = useUpdateProfile(auth);
   const {
     register,
     formState: { errors },
@@ -21,20 +23,35 @@ const Signup = () => {
 
   let errorMessage;
 
+  const location = useLocation();
+  const from = location?.state?.from?.pathname || "/";
+
+  useEffect(() => {
+    if (user || gUser) {
+      navigate(from, { replace: true });
+    }
+  }, [user, gUser]);
+
   const handleGoogleSubmit = () => {
     signInWithGoogle();
   };
 
-  const onSubmit = (data) => {
-    console.log(data);
-    createUserWithEmailAndPassword(data.email, data.password);
+  const onSubmit = async (data) => {
+    await createUserWithEmailAndPassword(data.email, data.password);
+    await updateProfile({ displayName: data.name });
+    console.log("update done");
+    navigate("/appointment");
   };
 
-  if (loading || gLoading) {
+  if (user || gUser) {
+    console.log(user || gUser);
+  }
+
+  if (loading || gLoading || updating) {
     return <Loader />;
   }
 
-  if (error || gError) {
+  if (error || gError || updateError) {
     errorMessage = (
       <span className="text-red-500">{error?.message || gError?.message}</span>
     );

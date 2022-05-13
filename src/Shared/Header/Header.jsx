@@ -10,8 +10,9 @@ const Header = () => {
   const logout = () => {
     signOut(auth);
   };
+
   return (
-    <header className="bg-base-100">
+    <header className="bg-base-100 top-0 sticky shadow-sm z-10">
       <div className="navbar justify-between py-4 lg:container lg:mx-auto">
         <div className="navbar-start">
           <div className="dropdown">
