@@ -16,7 +16,7 @@ const AvailableAppointment = ({ date }) => {
   return (
     <section className="py-24 lg:container lg:mx-auto px-5 lg:px-0">
       <p className="text-center text-secondary font-bold text-2xl">
-        Available Appointments on {format(date, "PP")}
+        Available Appointments on {format(date || new Date(), "PP")}
       </p>
       <div className="pt-8 lg:pt-[70px] grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {appointment.map((item) => (

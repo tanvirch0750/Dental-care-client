@@ -1,7 +1,15 @@
+import { signOut } from "firebase/auth";
 import React from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { Link } from "react-router-dom";
+import auth from "../../Firebase/firebase.init";
 
 const Header = () => {
+  const [user, loading, error] = useAuthState(auth);
+
+  const logout = () => {
+    signOut(auth);
+  };
   return (
     <header className="bg-base-100">
       <div className="navbar justify-between py-4 lg:container lg:mx-auto">
@@ -42,9 +50,18 @@ const Header = () => {
               <li>
                 <Link to="/contact-us">Contact Us</Link>
               </li>
-              <li>
-                <Link to="/login">Login</Link>
-              </li>
+              {user && (
+                <li>
+                  <Link onClick={logout} to="/login">
+                    Logout
+                  </Link>
+                </li>
+              )}
+              {!user && (
+                <li>
+                  <Link to="/login">Login</Link>
+                </li>
+              )}
             </ul>
           </div>
           <Link to="/" className="text-2xl">
@@ -93,14 +110,27 @@ const Header = () => {
                 Contact Us
               </Link>
             </li>
-            <li className="">
-              <Link
-                to="/login"
-                className="hover:bg-accent hover:text-white hover:rounded-lg active:bg-accent focus:bg-accent focus:text-white"
-              >
-                Login
-              </Link>
-            </li>
+            {!user && (
+              <li className="">
+                <Link
+                  to="/login"
+                  className="hover:bg-accent hover:text-white hover:rounded-lg active:bg-accent focus:bg-accent focus:text-white"
+                >
+                  Login
+                </Link>
+              </li>
+            )}
+            {user && (
+              <li className="">
+                <Link
+                  onClick={logout}
+                  to="/login"
+                  className="hover:bg-accent hover:text-white hover:rounded-lg active:bg-accent focus:bg-accent focus:text-white"
+                >
+                  Logout
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
       </div>
