@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import {
+  useSendPasswordResetEmail,
   useSignInWithEmailAndPassword,
   useSignInWithGoogle,
 } from "react-firebase-hooks/auth";
@@ -12,9 +13,12 @@ const Login = () => {
   const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(auth);
+  const [sendPasswordResetEmail, sending, errorReset] =
+    useSendPasswordResetEmail(auth);
   const {
     register,
     formState: { errors },
+    watch,
     handleSubmit,
   } = useForm({});
 
@@ -37,6 +41,25 @@ const Login = () => {
   const onSubmit = (data) => {
     console.log(data);
     signInWithEmailAndPassword(data.email, data.password);
+  };
+
+  const email = watch("email");
+  function validateEmail() {
+    let validRegex = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
+    if (email.match(validRegex)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  const handleResetEmail = async () => {
+    if (!validateEmail()) {
+      alert("Plese Enter your email");
+    } else {
+      await sendPasswordResetEmail(email);
+      alert("Email verification email sent to your email");
+    }
   };
 
   if (loading || gLoading) {
@@ -121,6 +144,15 @@ const Login = () => {
               Login
             </button>
           </form>
+          <p className="text-accent text-sm text-center font-medium">
+            Forgot your password?{" "}
+            <span
+              className="text-secondary font-medium cursor-pointer"
+              onClick={handleResetEmail}
+            >
+              Reset your password
+            </span>
+          </p>
           <p className="text-accent text-sm text-center font-medium">
             New to Dental Care?{" "}
             <Link to="/signup" className="text-secondary font-medium">
