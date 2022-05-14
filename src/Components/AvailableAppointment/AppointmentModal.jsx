@@ -4,14 +4,44 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../../Firebase/firebase.init";
 
 const AppointmentModal = ({ treatment, date, setTreatment }) => {
-  const { name, slots } = treatment;
-  const [user, loading] = useAuthState(auth);
+  const { _id, name, slots } = treatment;
+  const [user, loading, error] = useAuthState(auth);
+  const formatedDate = format(date, "PP");
 
   const handleBooking = (e) => {
     e.preventDefault();
     const slot = e.target.slot.value;
-    console.log(slot);
-    setTreatment(null);
+    const phone = e.target.phone.value;
+
+    const booking = {
+      treatmentId: _id,
+      treatment: name,
+      date: formatedDate,
+      slot,
+      patientName: user.displayName,
+      patientEmail: user.email,
+      phone: phone,
+    };
+
+    fetch("http://localhost:5000/booking", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(booking),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          alert(`Appointment is set, ${formatedDate} at ${slot}`);
+        } else {
+          alert(
+            `You already have an appointment on, ${data.booking?.date} at ${data.booking?.slot}  for ${name} treatment`
+          );
+        }
+
+        setTreatment(null); // for modal close
+      });
   };
 
   return (
@@ -67,7 +97,7 @@ const AppointmentModal = ({ treatment, date, setTreatment }) => {
               className="input w-full font-medium text-xl bg-[#E6E6E6]"
             />
             <input
-              name="number"
+              name="phone"
               type="number"
               placeholder="Phone Number"
               className="input input-bordered w-full"
