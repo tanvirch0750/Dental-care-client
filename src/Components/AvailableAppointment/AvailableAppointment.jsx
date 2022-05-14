@@ -6,9 +6,10 @@ import AppointmentModal from "./AppointmentModal";
 const AvailableAppointment = ({ date }) => {
   const [appointment, setAppointment] = useState([]);
   const [treatment, setTreatment] = useState(null);
+  const formatedDate = format(date, "PP");
 
   useEffect(() => {
-    fetch("http://localhost:5000/appointments")
+    fetch(`http://localhost:5000/available?${formatedDate}`)
       .then((res) => res.json())
       .then((data) => setAppointment(data));
   }, [date]);
