@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   useCreateUserWithEmailAndPassword,
   useSignInWithGoogle,
@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Loader from "../../../Components/Loader/Loader";
 import auth from "../../../Firebase/firebase.init";
+import useToken from "../../../Hooks/useToken";
 
 const Signup = () => {
   const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
@@ -21,16 +22,18 @@ const Signup = () => {
   } = useForm({});
   const navigate = useNavigate();
 
+  const [token] = useToken(user || gUser);
+
   let errorMessage;
 
   const location = useLocation();
   const from = location?.state?.from?.pathname || "/";
 
-  useEffect(() => {
-    if (user || gUser) {
-      navigate(from, { replace: true });
-    }
-  }, [user, gUser]);
+  // useEffect(() => {
+  //   if (user || gUser) {
+  //     navigate(from, { replace: true });
+  //   }
+  // }, [user, gUser]);
 
   const handleGoogleSubmit = () => {
     signInWithGoogle();
@@ -39,13 +42,8 @@ const Signup = () => {
   const onSubmit = async (data) => {
     await createUserWithEmailAndPassword(data.email, data.password);
     await updateProfile({ displayName: data.name });
-    console.log("update done");
     navigate("/appointment");
   };
-
-  if (user || gUser) {
-    console.log(user || gUser);
-  }
 
   if (loading || gLoading || updating) {
     return <Loader />;
@@ -56,6 +54,10 @@ const Signup = () => {
       <span className="text-red-500">{error?.message || gError?.message}</span>
     );
   }
+
+  // if (token) {
+  //   navigate(from, { replace: true });
+  // }
 
   return (
     <section className="min-h-[calc(100vh-80px)] flex justify-center items-center py-16">
