@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Loader from "../../../Components/Loader/Loader";
 import auth from "../../../Firebase/firebase.init";
+import useToken from "../../../Hooks/useToken";
 
 const Login = () => {
   const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
@@ -22,24 +23,20 @@ const Login = () => {
     handleSubmit,
   } = useForm({});
 
+  const [token] = useToken(user || gUser);
+
   let errorMessage;
 
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location?.state?.from?.pathname || "/";
 
-  useEffect(() => {
-    if (user || gUser) {
-      navigate(from, { replace: true });
-    }
-  }, [user, gUser]);
+  const from = location?.state?.from?.pathname || "/";
 
   const handleGoogleSubmit = () => {
     signInWithGoogle();
   };
 
   const onSubmit = (data) => {
-    console.log(data);
     signInWithEmailAndPassword(data.email, data.password);
   };
 
@@ -62,14 +59,20 @@ const Login = () => {
     }
   };
 
-  if (loading || gLoading) {
-    return <Loader />;
-  }
-
   if (error || gError) {
     errorMessage = (
       <span className="text-red-500">{error?.message || gError?.message}</span>
     );
+  }
+
+  useEffect(() => {
+    if (token) {
+      navigate(from, { replace: true });
+    }
+  }, [token, from, navigate]);
+
+  if (loading || gLoading) {
+    return <Loader />;
   }
 
   return (

@@ -55,9 +55,9 @@ const Signup = () => {
     );
   }
 
-  // if (token) {
-  //   navigate(from, { replace: true });
-  // }
+  if (token) {
+    navigate(from, { replace: true });
+  }
 
   return (
     <section className="min-h-[calc(100vh-80px)] flex justify-center items-center py-16">
