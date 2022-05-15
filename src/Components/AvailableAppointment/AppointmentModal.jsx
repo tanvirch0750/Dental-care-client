@@ -3,7 +3,7 @@ import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../../Firebase/firebase.init";
 
-const AppointmentModal = ({ treatment, date, setTreatment }) => {
+const AppointmentModal = ({ treatment, date, setTreatment, refetch }) => {
   const { _id, name, slots } = treatment;
   const [user, loading, error] = useAuthState(auth);
   const formatedDate = format(date, "PP");
@@ -39,7 +39,7 @@ const AppointmentModal = ({ treatment, date, setTreatment }) => {
             `You already have an appointment on, ${data.booking?.date} at ${data.booking?.slot}  for ${name} treatment`
           );
         }
-
+        refetch();
         setTreatment(null); // for modal close
       });
   };

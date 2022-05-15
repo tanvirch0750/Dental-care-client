@@ -53,6 +53,11 @@ const Header = () => {
               </li>
               {user && (
                 <li>
+                  <Link to="/dashboard">Dashboard</Link>
+                </li>
+              )}
+              {user && (
+                <li>
                   <Link onClick={logout} to="/login">
                     Logout
                   </Link>
@@ -111,6 +116,16 @@ const Header = () => {
                 Contact Us
               </Link>
             </li>
+            {user && (
+              <li>
+                <Link
+                  to="/dashboard"
+                  className="hover:bg-accent hover:text-white hover:rounded-lg active:bg-accent focus:bg-accent focus:text-white"
+                >
+                  Dashboard
+                </Link>
+              </li>
+            )}
             {!user && (
               <li className="">
                 <Link
@@ -133,6 +148,14 @@ const Header = () => {
               </li>
             )}
           </ul>
+        </div>
+        <div className="navbar-end">
+          <label
+            for="my-drawer-2"
+            className="btn btn-primary drawer-button lg:hidden text-white"
+          >
+            Dashboard
+          </label>
         </div>
       </div>
     </header>

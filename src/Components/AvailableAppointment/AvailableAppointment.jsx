@@ -1,20 +1,28 @@
 import { format } from "date-fns";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useQuery } from "react-query";
+import Loader from "../Loader/Loader";
 import AppointmentCard from "./AppointmentCard";
 import AppointmentModal from "./AppointmentModal";
 
 const AvailableAppointment = ({ date }) => {
-  const [appointment, setAppointment] = useState([]);
   const [treatment, setTreatment] = useState(null);
   const formatedDate = format(date, "PP");
 
-  console.log(`http://localhost:5000/available?date=${formatedDate}`);
+  const {
+    isLoading,
+    error,
+    data: appointment,
+    refetch,
+  } = useQuery(["availableAppointment", formatedDate], () =>
+    fetch(`http://localhost:5000/available?date=${formatedDate}`).then((res) =>
+      res.json()
+    )
+  );
 
-  useEffect(() => {
-    fetch(`http://localhost:5000/available?date=${formatedDate}`)
-      .then((res) => res.json())
-      .then((data) => setAppointment(data));
-  }, [date]);
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <section className="py-24 lg:container lg:mx-auto px-5 lg:px-0">
@@ -22,7 +30,7 @@ const AvailableAppointment = ({ date }) => {
         Available Appointments on {format(date || new Date(), "PP")}
       </p>
       <div className="pt-8 lg:pt-[70px] grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {appointment.map((item) => (
+        {appointment?.map((item) => (
           <AppointmentCard
             key={item._id}
             item={item}
@@ -35,6 +43,7 @@ const AvailableAppointment = ({ date }) => {
           date={date}
           treatment={treatment}
           setTreatment={setTreatment}
+          refetch={refetch}
         />
       )}
     </section>
