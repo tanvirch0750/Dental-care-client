@@ -52,7 +52,7 @@ const MyAppoitment = () => {
             </thead>
             <tbody>
               {booking.map((book, idx) => (
-                <tr>
+                <tr key={book._id}>
                   <th>{idx + 1}</th>
                   <td>{book.patientName}</td>
                   <td>{book.date}</td>

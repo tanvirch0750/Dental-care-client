@@ -6,7 +6,7 @@ const Dashboard = () => {
     <section>
       <div className="drawer drawer-mobile">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content bg-slate-100">
+        <div className="drawer-content bg-slate-100 py-8">
           <h1 className="text-4xl text-secondary font-bold text-center py-8 mb-8">
             Welcome to Dental Care dashboard
           </h1>

@@ -1,10 +1,32 @@
+import { signOut } from "firebase/auth";
 import React from "react";
 import { useQuery } from "react-query";
+import { useNavigate } from "react-router-dom";
 import Loader from "../Components/Loader/Loader";
+import auth from "../Firebase/firebase.init";
+import UserRow from "./UserRow";
 
 const AllUsers = () => {
-  const { data: users, isLoading } = useQuery("users", () =>
-    fetch("http://localhost:5000/users").then((res) => res.json())
+  const navigate = useNavigate();
+
+  const {
+    data: users,
+    isLoading,
+    refetch,
+  } = useQuery("users", () =>
+    fetch("http://localhost:5000/users", {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    }).then((res) => {
+      if (res.status === 401 || res.status === 403) {
+        localStorage.removeItem("accessToken");
+        signOut(auth);
+        navigate("/");
+      }
+      return res.json();
+    })
   );
 
   if (isLoading) {
@@ -23,15 +45,18 @@ const AllUsers = () => {
                 <th></th>
                 <th>Email</th>
                 <th>Role</th>
+                <th>Make Admin</th>
+                <th>Delete</th>
               </tr>
             </thead>
             <tbody>
               {users.map((user, idx) => (
-                <tr key={user._id}>
-                  <th>{idx + 1}</th>
-                  <td>{user.email}</td>
-                  <td>User</td>
-                </tr>
+                <UserRow
+                  key={user._id}
+                  user={user}
+                  idx={idx}
+                  refetch={refetch}
+                />
               ))}
             </tbody>
           </table>
