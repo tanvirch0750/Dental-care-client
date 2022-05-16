@@ -1,6 +1,10 @@
+import { signOut } from "firebase/auth";
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import auth from "../Firebase/firebase.init";
 
 const UserRow = ({ user, idx, refetch }) => {
+  const navigate = useNavigate();
   const makeAdmin = () => {
     fetch(`http://localhost:5000/users/admin/${user.email}`, {
       method: "PUT",
@@ -8,10 +12,20 @@ const UserRow = ({ user, idx, refetch }) => {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 401 || res.status === 403) {
+          localStorage.removeItem("accessToken");
+          signOut(auth);
+          navigate("/");
+          alert("Make admin attempt fail");
+        }
+        return res.json();
+      })
       .then((data) => {
-        refetch();
-        alert("Successfully made an admin");
+        if (data.modifiedCount > 0) {
+          refetch();
+          alert("Successfully made an admin");
+        }
       });
   };
   return (
