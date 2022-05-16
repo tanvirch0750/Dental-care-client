@@ -9,6 +9,7 @@ import auth from "./Firebase/firebase.init";
 import About from "./Pages/About/About";
 import Appointment from "./Pages/Appointment/Appointment";
 import Login from "./Pages/Authentication/Login/Login";
+import RequireAdmin from "./Pages/Authentication/RequireAdmin/RequireAdmin";
 import RequireAuth from "./Pages/Authentication/RequireAuth/RequireAuth";
 import Signup from "./Pages/Authentication/Signup/Signup";
 import ContactUs from "./Pages/ContactUs/ContactUs";
@@ -44,7 +45,14 @@ function App() {
         >
           <Route index element={<MyAppoitment />}></Route>
           <Route path="review" element={<MyReview />}></Route>
-          <Route path="users" element={<AllUsers />}></Route>
+          <Route
+            path="users"
+            element={
+              <RequireAdmin>
+                <AllUsers />
+              </RequireAdmin>
+            }
+          ></Route>
         </Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/signup" element={<Signup />}></Route>
