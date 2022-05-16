@@ -1,6 +1,7 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
+import AllUsers from "./Dashboard/AllUsers";
 import Dashboard from "./Dashboard/Dashboard";
 import MyAppoitment from "./Dashboard/MyAppoitment";
 import MyReview from "./Dashboard/MyReview";
@@ -43,15 +44,8 @@ function App() {
         >
           <Route index element={<MyAppoitment />}></Route>
           <Route path="review" element={<MyReview />}></Route>
+          <Route path="users" element={<AllUsers />}></Route>
         </Route>
-        {/* <Route
-          path="/login"
-          element={
-            <ProtectedAuth>
-              <Login />
-            </ProtectedAuth>
-          }
-        ></Route> */}
         <Route path="/login" element={<Login />}></Route>
         <Route path="/signup" element={<Signup />}></Route>
       </Routes>
