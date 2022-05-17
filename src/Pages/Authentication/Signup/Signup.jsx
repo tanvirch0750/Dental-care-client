@@ -29,12 +29,6 @@ const Signup = () => {
   const location = useLocation();
   const from = location?.state?.from?.pathname || "/";
 
-  // useEffect(() => {
-  //   if (user || gUser) {
-  //     navigate(from, { replace: true });
-  //   }
-  // }, [user, gUser]);
-
   const handleGoogleSubmit = () => {
     signInWithGoogle();
   };

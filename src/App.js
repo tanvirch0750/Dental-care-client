@@ -1,6 +1,7 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
+import AddDoctor from "./Dashboard/AddDoctor";
 import AllUsers from "./Dashboard/AllUsers";
 import Dashboard from "./Dashboard/Dashboard";
 import MyAppoitment from "./Dashboard/MyAppoitment";
@@ -35,6 +36,7 @@ function App() {
         ></Route>
         <Route path="/reviews" element={<Reviews />}></Route>
         <Route path="/contact-us" element={<ContactUs />}></Route>
+        {/* nested route start */}
         <Route
           path="/dashboard"
           element={
@@ -53,7 +55,16 @@ function App() {
               </RequireAdmin>
             }
           ></Route>
+          <Route
+            path="add-doctor"
+            element={
+              <RequireAdmin>
+                <AddDoctor />
+              </RequireAdmin>
+            }
+          ></Route>
         </Route>
+        {/* Nested route end */}
         <Route path="/login" element={<Login />}></Route>
         <Route path="/signup" element={<Signup />}></Route>
       </Routes>

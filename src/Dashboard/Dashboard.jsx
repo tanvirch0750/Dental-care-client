@@ -11,8 +11,8 @@ const Dashboard = () => {
     <section>
       <div className="drawer drawer-mobile">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content bg-slate-100 py-8">
-          <h1 className="text-4xl text-secondary font-bold text-center py-8 mb-8">
+        <div className="drawer-content bg-slate-100 pt-4 pb-8">
+          <h1 className="text-4xl text-secondary font-bold mb-8 ml-8">
             Welcome to Dental Care dashboard
           </h1>
           {/* main content */}
@@ -31,6 +31,11 @@ const Dashboard = () => {
             {admin && (
               <li>
                 <Link to="/dashboard/users">All Users</Link>
+              </li>
+            )}
+            {admin && (
+              <li>
+                <Link to="/dashboard/add-doctor">Add a doctor</Link>
               </li>
             )}
           </ul>
