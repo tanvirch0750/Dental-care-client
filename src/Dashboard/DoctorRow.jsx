@@ -1,26 +1,8 @@
 import React from "react";
 
-const DoctorRow = ({ doctor, idx, refetch }) => {
+const DoctorRow = ({ doctor, idx, refetch, setDeleteModal }) => {
   const { _id, name, speciality, email, image } = doctor;
 
-  const handleDelete = (email) => {
-    fetch(`https://morning-shelf-05146.herokuapp.com/doctor/${email}`, {
-      method: "DELETE",
-      headers: {
-        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("doctor delete", data);
-        if (data.deletedCount) {
-          refetch();
-          alert(`Doctor ${name} deleted successfully`);
-        } else {
-          alert("Something went wrong");
-        }
-      });
-  };
   return (
     <tr>
       <th>{idx + 1}</th>
@@ -35,12 +17,13 @@ const DoctorRow = ({ doctor, idx, refetch }) => {
       <td>{speciality}</td>
       <td>{email}</td>
       <td>
-        <button
-          onClick={() => handleDelete(email)}
+        <label
+          onClick={() => setDeleteModal(doctor)}
+          for="delete-modal"
           className="btn btn-xs btn-error text-white"
         >
-          delete
-        </button>
+          Deletee
+        </label>
       </td>
     </tr>
   );
