@@ -4,7 +4,11 @@ import Loader from "../Components/Loader/Loader";
 import DoctorRow from "./DoctorRow";
 
 const ManageDoctors = () => {
-  const { data: doctors, isLoading } = useQuery("doctors", () =>
+  const {
+    data: doctors,
+    isLoading,
+    refetch,
+  } = useQuery("doctors", () =>
     fetch("https://morning-shelf-05146.herokuapp.com/doctor", {
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -35,7 +39,12 @@ const ManageDoctors = () => {
           </thead>
           <tbody>
             {doctors.map((doctor, idx) => (
-              <DoctorRow key={doctor._id} doctor={doctor} idx={idx} />
+              <DoctorRow
+                key={doctor._id}
+                doctor={doctor}
+                idx={idx}
+                refetch={refetch}
+              />
             ))}
           </tbody>
         </table>

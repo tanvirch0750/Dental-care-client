@@ -1,7 +1,26 @@
 import React from "react";
 
-const DoctorRow = ({ doctor, idx }) => {
+const DoctorRow = ({ doctor, idx, refetch }) => {
   const { _id, name, speciality, email, image } = doctor;
+
+  const handleDelete = (email) => {
+    fetch(`https://morning-shelf-05146.herokuapp.com/doctor/${email}`, {
+      method: "DELETE",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("doctor delete", data);
+        if (data.deletedCount) {
+          refetch();
+          alert(`Doctor ${name} deleted successfully`);
+        } else {
+          alert("Something went wrong");
+        }
+      });
+  };
   return (
     <tr>
       <th>{idx + 1}</th>
@@ -16,7 +35,12 @@ const DoctorRow = ({ doctor, idx }) => {
       <td>{speciality}</td>
       <td>{email}</td>
       <td>
-        <button className="btn btn-xs btn-error text-white">delete</button>
+        <button
+          onClick={() => handleDelete(email)}
+          className="btn btn-xs btn-error text-white"
+        >
+          delete
+        </button>
       </td>
     </tr>
   );
