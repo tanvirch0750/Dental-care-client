@@ -1,5 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useQuery } from "react-query";
+import Loader from "../Components/Loader/Loader";
 
 const AddDoctor = () => {
   const {
@@ -8,9 +10,25 @@ const AddDoctor = () => {
     handleSubmit,
   } = useForm({});
 
+  const {
+    isLoading,
+    error,
+    data: services,
+    refetch,
+  } = useQuery(["services"], () =>
+    fetch(`https://morning-shelf-05146.herokuapp.com/appointments`).then(
+      (res) => res.json()
+    )
+  );
+
   const onSubmit = async (data) => {
     console.log("doctor data", data);
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <section className="flex justify-center items-center">
       <div className="card w-96 bg-base-100 shadow-lg">
@@ -52,7 +70,7 @@ const AddDoctor = () => {
                   },
                 })}
                 type="email"
-                placeholder="Your Email"
+                placeholder="Doctor Email"
                 className="input input-bordered w-full mt-1"
               />
               {errors.email?.type === "required" && (
@@ -68,20 +86,33 @@ const AddDoctor = () => {
             </div>
             <div className="mt-4">
               <label className="font-medium">Doctor Specialization:</label>
+
+              <select
+                {...register("speciality")}
+                className="select select-bordered w-full mt-1"
+              >
+                {services.map((service) => (
+                  <option key={service._id}>{service.name}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className="mt-4">
+              <label className="font-medium">Doctor Image:</label>
               <input
-                {...register("speciality", {
+                {...register("image", {
                   required: {
                     value: true,
-                    message: "Speciality field is required",
+                    message: "Photo is required",
                   },
                 })}
-                type="text"
-                placeholder="Doctor Speciality"
-                className="input input-bordered w-full mt-1"
+                type="file"
+                placeholder="Doctor Photo"
+                className="input input-bordered w-full mt-1 pt-[6px]"
               />
-              {errors.password?.type === "required" && (
+              {errors.name?.type === "required" && (
                 <span className="text-red-500 mt-2 block">
-                  {errors?.password?.message}
+                  {errors?.image?.message}
                 </span>
               )}
             </div>
