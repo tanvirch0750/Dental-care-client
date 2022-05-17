@@ -6,15 +6,12 @@ import auth from "../Firebase/firebase.init";
 const UserRow = ({ user, idx, refetch }) => {
   const navigate = useNavigate();
   const makeAdmin = () => {
-    fetch(
-      `https://morning-shelf-05146.herokuapp.com/users/admin/${user.email}`,
-      {
-        method: "PUT",
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      }
-    )
+    fetch(`https://morning-shelf-05146.herokuapp.com/admin/${user.email}`, {
+      method: "PUT",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    })
       .then((res) => {
         if (res.status === 401 || res.status === 403) {
           localStorage.removeItem("accessToken");

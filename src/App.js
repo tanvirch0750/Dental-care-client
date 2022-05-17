@@ -1,12 +1,11 @@
-import { useAuthState } from "react-firebase-hooks/auth";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import AddDoctor from "./Dashboard/AddDoctor";
 import AllUsers from "./Dashboard/AllUsers";
 import Dashboard from "./Dashboard/Dashboard";
+import ManageDoctors from "./Dashboard/ManageDoctors";
 import MyAppoitment from "./Dashboard/MyAppoitment";
 import MyReview from "./Dashboard/MyReview";
-import auth from "./Firebase/firebase.init";
 import About from "./Pages/About/About";
 import Appointment from "./Pages/Appointment/Appointment";
 import Login from "./Pages/Authentication/Login/Login";
@@ -19,7 +18,7 @@ import Reviews from "./Pages/Reviews/Reviews";
 import Header from "./Shared/Header/Header";
 
 function App() {
-  const [user, loading, error] = useAuthState(auth);
+  // const [user, loading, error] = useAuthState(auth);
   return (
     <>
       <Header />
@@ -60,6 +59,14 @@ function App() {
             element={
               <RequireAdmin>
                 <AddDoctor />
+              </RequireAdmin>
+            }
+          ></Route>
+          <Route
+            path="manage-doctor"
+            element={
+              <RequireAdmin>
+                <ManageDoctors />
               </RequireAdmin>
             }
           ></Route>
