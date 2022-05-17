@@ -8,6 +8,7 @@ const AddDoctor = () => {
     register,
     formState: { errors },
     handleSubmit,
+    reset,
   } = useForm({});
 
   const {
@@ -44,6 +45,24 @@ const AddDoctor = () => {
             image: img,
           };
           // send to your db
+          fetch("https://morning-shelf-05146.herokuapp.com/doctor", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+              authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+            body: JSON.stringify(doctor),
+          })
+            .then((res) => res.json())
+            .then((inserted) => {
+              if (inserted.insertedId) {
+                console.log("doctor insert", inserted);
+                alert("Doctor added successfully");
+                reset();
+              } else {
+                alert("Failed to add the doctor");
+              }
+            });
         }
         console.log("imgbb", result);
       });
