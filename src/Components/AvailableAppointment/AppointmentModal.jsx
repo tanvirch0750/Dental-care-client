@@ -4,7 +4,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../../Firebase/firebase.init";
 
 const AppointmentModal = ({ treatment, date, setTreatment, refetch }) => {
-  const { _id, name, slots } = treatment;
+  const { _id, name, slots, price } = treatment;
   const [user, loading, error] = useAuthState(auth);
   const formatedDate = format(date, "PP");
 
@@ -18,9 +18,10 @@ const AppointmentModal = ({ treatment, date, setTreatment, refetch }) => {
       treatment: name,
       date: formatedDate,
       slot,
+      price,
       patientName: user.displayName,
       patientEmail: user.email,
-      phone: phone,
+      phone,
     };
 
     fetch("https://morning-shelf-05146.herokuapp.com/booking", {
