@@ -1,7 +1,14 @@
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 import React from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import Loader from "../Components/Loader/Loader";
+import CheckoutForm from "./CheckoutForm";
+
+const stripePromise = loadStripe(
+  "pk_test_51JqdAsGXrwkMLuhtiJgMQKnaLLHsfi7RQMEznBz9DWD4EQxzjKqGqjajqHa3EMBXLxTM0Bf6WiGAAigES9a0YSB600FrqYDOoX"
+);
 
 const Payment = () => {
   const { appointmentId } = useParams();
@@ -49,20 +56,9 @@ const Payment = () => {
           </div>
           <div class="card w-100 bg-base-100 shadow-xl mt-8">
             <div class="card-body">
-              <h2 class="card-title text-secondary font-bold">{`Hello ${appointment.patientName}`}</h2>
-              <p>
-                We will see you on{" "}
-                <span className="text-primary font-bold">
-                  {appointment.date}
-                </span>{" "}
-                at{" "}
-                <span className="text-primary font-bold">
-                  {appointment.slot}
-                </span>
-              </p>
-              <div class="card-actions justify-end">
-                <button class="btn btn-primary">Buy Now</button>
-              </div>
+              <Elements stripe={stripePromise}>
+                <CheckoutForm />
+              </Elements>
             </div>
           </div>
         </div>
