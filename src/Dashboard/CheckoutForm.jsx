@@ -5,9 +5,11 @@ const CheckoutForm = ({ appointment }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [cardError, setCardError] = useState("");
+  const [success, setSuccess] = useState("");
   const [clientSecret, setClientSecret] = useState("");
+  const [transactionId, setTransactionId] = useState("");
 
-  const { price } = appointment;
+  const { price, patientEmail, patientName } = appointment;
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
@@ -46,6 +48,28 @@ const CheckoutForm = ({ appointment }) => {
     });
 
     setCardError(error?.message || "");
+    setSuccess("");
+
+    // Confirmed card payment
+    const { paymentIntent, error: intentError } =
+      await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: card,
+          billing_details: {
+            name: patientName,
+            email: patientEmail,
+          },
+        },
+      });
+
+    if (intentError) {
+      setCardError(intentError?.message);
+    } else {
+      setCardError("");
+      console.log(paymentIntent);
+      setTransactionId(paymentIntent.id);
+      setSuccess("Congrats your payment is completed");
+    }
   };
   return (
     <form onSubmit={handleSubmit}>
@@ -65,7 +89,6 @@ const CheckoutForm = ({ appointment }) => {
           },
         }}
       />
-      <p className="text-red-500 mt-3">{cardError}</p>
       <button
         className="btn btn-success btn-md mt-3"
         type="submit"
@@ -73,6 +96,17 @@ const CheckoutForm = ({ appointment }) => {
       >
         Pay
       </button>
+
+      {cardError && <p className="text-red-500 mt-3">{cardError}</p>}
+      {success && (
+        <div className="text-success mt-3">
+          <p>{success}</p>
+          <p>
+            Your Transaction Id:{" "}
+            <span className="text-secondary">{transactionId}</span>
+          </p>
+        </div>
+      )}
     </form>
   );
 };

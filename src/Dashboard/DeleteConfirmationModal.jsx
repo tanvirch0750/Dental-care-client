@@ -24,7 +24,7 @@ const DeleteConfirmationModal = ({ deleteModal, refetch, setDeleteModal }) => {
   };
   return (
     <div>
-      <input type="checkbox" id="delete-modal" class="modal-toggle" />
+      <input type="checkbox" id="delete-modal" className="modal-toggle" />
       <div className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
           <label
