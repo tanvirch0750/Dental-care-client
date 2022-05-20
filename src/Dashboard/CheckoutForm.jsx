@@ -8,8 +8,9 @@ const CheckoutForm = ({ appointment }) => {
   const [success, setSuccess] = useState("");
   const [clientSecret, setClientSecret] = useState("");
   const [transactionId, setTransactionId] = useState("");
+  const [processing, setProcessing] = useState(false);
 
-  const { price, patientEmail, patientName } = appointment;
+  const { _id, price, patientEmail, patientName } = appointment;
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
@@ -49,6 +50,7 @@ const CheckoutForm = ({ appointment }) => {
 
     setCardError(error?.message || "");
     setSuccess("");
+    // setProcessing(true);
 
     // Confirmed card payment
     const { paymentIntent, error: intentError } =
@@ -64,13 +66,39 @@ const CheckoutForm = ({ appointment }) => {
 
     if (intentError) {
       setCardError(intentError?.message);
+      // setProcessing(false);
     } else {
       setCardError("");
       console.log(paymentIntent);
       setTransactionId(paymentIntent.id);
       setSuccess("Congrats your payment is completed");
+
+      // update data and set data into db
+      const payment = {
+        appointment: _id,
+        transactionId: paymentIntent.id,
+      };
+
+      const url = `http://morning-shelf-05146.herokuapp.com/booking/${_id}`;
+
+      fetch(url, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+        body: JSON.stringify(payment),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          // setProcessing(false);
+        });
     }
   };
+
+  // if (setProcessing) {
+  //   return <Loader />;
+  // }
   return (
     <form onSubmit={handleSubmit}>
       <CardElement
@@ -78,7 +106,7 @@ const CheckoutForm = ({ appointment }) => {
           style: {
             base: {
               fontSize: "16px",
-              color: "#424770",
+              color: "#705c42",
               "::placeholder": {
                 color: "#aab7c4",
               },
